@@ -1,0 +1,32 @@
+defaults:
+  - _self_
+
+inference:
+  use_amp: true
+  device: cuda:0
+
+paths:
+  data_table: ???
+  output_dir: inference_outputs
+  model_path: ???
+  tuning_json: null
+  train_conf: null
+  temp_dir: null
+  verify_temp: true
+
+other:
+  disable_TQDM: true
+  force: false
+
+logging:
+  level: info
+  sysout_level: info
+  format: "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <blue>{name}:{function}:{line}</blue> | {message}"
+  colorize: true
+  backtrace: true
+  diagnose: false
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .

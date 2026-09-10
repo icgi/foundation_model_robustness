@@ -1,0 +1,75 @@
+training:
+  n_steps: 20000
+  batch_size: 16
+  weight_decay: 0.02
+  momentum_sgd: 0.9
+  optimizer: sgd
+  scheduler: one_cycle_lr
+  max_lr: 0.01
+  grad_norm_clip: 20
+  use_amp: false
+  checkpoint_interval: 500
+  train_max_bag_size: 512
+  device: cuda:0
+
+model:
+  mil_model: ABMIL
+  num_classes: 2
+  model_load_checkpoint: null
+  embedding_size: 256
+  encoder_layers: 3
+  dropout_head: 0.2
+  use_batchnorm: true
+
+loss:
+  score_loss_function: mse
+  score_loss_weight: 10
+  use_softmax_in_mse_score: false
+  embedding_loss_weight: 10
+  embedding_loss_function: contrastive
+  contrastive_temperature: 0.1
+  contrastive_num_negative_samples: 5
+  contrastive_diff_patient_negative: true
+  contrastive_max_tiles_per_scan: 128
+
+dataloader:
+  persistent_workers: true
+  pin_memory: true
+  num_workers: 12
+  prefetch_factor: 2
+  store_on_gpu: false
+  store_type: half
+
+paths:
+  data_table: ???
+  output_dir: outputs
+  temp_dir: null
+  verify_temp: true
+
+data:
+  use_label_weight: true
+  oversample: false
+  oversample_by_column: ???
+  pair_scans: true
+  pair_tiles: true
+  stream_data: false
+  target_label: ???
+  remove_out_of_bounds: true
+
+other:
+  disable_TQDM: true
+  force: false
+  seed: null
+
+logging:
+  level: info
+  sysout_level: info
+  format: "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <blue>{name}:{function}:{line}</blue> | {message}"
+  colorize: true
+  backtrace: true
+  diagnose: false
+
+hydra:
+  output_subdir: null
+  run:
+    dir: .
